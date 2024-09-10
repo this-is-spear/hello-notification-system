@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: forwarder1
+
+sender:
+  base-url: ${SENDER_BASE_URL}
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'

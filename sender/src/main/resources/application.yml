@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: sender
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
