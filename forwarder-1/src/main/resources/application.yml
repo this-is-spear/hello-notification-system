@@ -4,7 +4,7 @@ spring:
     name: forwarder1
 
 sender:
-  base-url: ${SENDER_BASE_URL}
+  base-url: ${SENDER_BASE_URL:http://localhost:8100}
 
 management:
   endpoints:
