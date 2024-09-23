@@ -14,7 +14,8 @@ class SenderController {
         channelKey: String,
         title: String,
         content: String,
-    ) {
+    ): SendResponse {
+        println("Sent message: $content")
         val pickedLatency = Random().nextInt(3) + 4
         Thread.sleep(pickedLatency * 1000L)
 
@@ -25,6 +26,12 @@ class SenderController {
 
         if (pickedNumber > 8) {
             throw IllegalArgumentException("Invalid message")
+        }
+
+        return if (pickedNumber > 4) {
+            SendResponse.RESPONSE_SUCCESS
+        } else {
+            SendResponse.RESPONSE_FAIL
         }
     }
 }

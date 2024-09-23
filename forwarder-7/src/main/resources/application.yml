@@ -2,9 +2,8 @@ spring:
   application:
     name: forwarder1
   datasource:
-    url: jdbc:mysql://localhost:3306/forwarder
-    username: root
-    password: test
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:sharding.yml
   jpa:
     show-sql: true
     hibernate:
@@ -12,7 +11,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-
 sender:
   base-url: http://localhost:8100
 
