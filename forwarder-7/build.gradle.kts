@@ -1,15 +1,15 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 dependencies {
-    compileOnly("javax.xml.bind:jaxb-api:2.3.0")
-    compileOnly("javax.activation:activation:1.1")
-    compileOnly("org.glassfish.jaxb:jaxb-runtime:2.3.0")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    // https://mvnrepository.com/artifact/org.apache.shardingsphere/sharding-jdbc-spring-boot-starter
-    implementation("org.apache.shardingsphere:shardingsphere-jdbc-core:5.4.0")
+    // https://shardingsphere.apache.org/document/5.5.0/en/user-manual/shardingsphere-jdbc/yaml-config/jdbc-driver/spring-boot/#handling-for-spring-boot-oss-3
+    // https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc
+    implementation("org.apache.shardingsphere:shardingsphere-jdbc:5.5.0") {
+        // issue https://github.com/apache/shardingsphere/issues/32256
+        exclude(group = "org.apache.shardingsphere", module = "shardingsphere-test-util")
+    }
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("io.projectreactor:reactor-test")
 }
