@@ -2,9 +2,9 @@ spring:
   application:
     name: forwarder1
   datasource:
-    url: jdbc:mysql://localhost:3306/forwarder
-    username: root
-    password: test
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
@@ -14,7 +14,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 
 sender:
-  base-url: http://localhost:8100
+  base-url: ${SENDER_BASE_URL}
 
 management:
   endpoints:

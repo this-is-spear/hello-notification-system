@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class AsynchronousService {
-    @Async
+    @Async("asyncSendExecutor")
     fun async(function: () -> Unit) {
         function()
     }

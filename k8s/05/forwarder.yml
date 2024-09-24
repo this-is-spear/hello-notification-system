@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forwarder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forwarder
+  template:
+    metadata:
+      labels:
+        app: forwarder
+    spec:
+      containers:
+        - name: forwarder
+          image: geonc123/tis-forwarder-5
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SENDER_BASE_URL
+              value: http://sender:8100
+            - name: MYSQL_HOST
+              value: mysql
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_ROOT_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_DATABASE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forwarder
+spec:
+  selector:
+    app: forwarder
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: LoadBalancer
