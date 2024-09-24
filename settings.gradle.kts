@@ -4,7 +4,7 @@ plugins {
 rootProject.name = "hello-notification-system"
 include("sender")
 include("forwarder-1")
-include("forwarder-2")
+include("forwarder-4")
 include("forwarder-5")
 include("forwarder-6")
 include("forwarder-7")

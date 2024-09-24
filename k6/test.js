@@ -4,9 +4,9 @@ import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
 export const options = {
     stages: [
-        { duration: '4m', target: 10 },
-        { duration: '10m', target: 100 },
-        { duration: '3m', target: 0 },
+        { duration: '10m', target: 500 },
+        { duration: '30m', target: 5000 },
+        { duration: '5m', target: 0 },
     ],
 };
 
