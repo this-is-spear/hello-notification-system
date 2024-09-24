@@ -2,30 +2,37 @@ dataSources:
   ds0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/forwarder_0
+    # https://deeplify.dev/database/troubleshoot/public-key-retrieval-is-not-allowed 이슈 발생했었음.
+    jdbcUrl: jdbc:mysql://localhost:3306/forwarder0?useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: test
   ds1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/forwarder_1
+    # https://deeplify.dev/database/troubleshoot/public-key-retrieval-is-not-allowed 이슈 발생했었음.
+    jdbcUrl: jdbc:mysql://localhost:3306/forwarder1?useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: test
 rules:
   - !SHARDING
     tables:
-      order:
-        actualDataNodes: ds$->{0..1}.pending_notification
+      pending_notification:
+        actualDataNodes: ds${0..1}.pending_notification
+      failed_notification:
+        actualDataNodes: ds${0..1}.failed_notification
+      completed_notification:
+        actualDataNodes: ds${0..1}.completed_notification
     defaultDatabaseStrategy:
       standard:
-        shardingColumn: id
+        shardingColumn: channel_key
         shardingAlgorithmName: database_inline
     defaultTableStrategy:
       none:
+    # https://shardingsphere.apache.org/document/5.5.0/en/dev-manual/sharding/
     shardingAlgorithms:
       database_inline:
         type: INLINE
         props:
-          algorithm-expression: ds${id % 2}
+          algorithm-expression: ds${channel_key.hashCode() % 2}
 props:
   sql-show: false
