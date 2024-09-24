@@ -24,14 +24,15 @@ rules:
         actualDataNodes: ds${0..1}.completed_notification
     defaultDatabaseStrategy:
       standard:
-        shardingColumn: channel
+        shardingColumn: channel_key
         shardingAlgorithmName: database_inline
     defaultTableStrategy:
       none:
+    # https://shardingsphere.apache.org/document/5.5.0/en/dev-manual/sharding/
     shardingAlgorithms:
       database_inline:
         type: INLINE
         props:
-          algorithm-expression: ds${channel.hashCode() % 2}
+          algorithm-expression: ds${channel_key.hashCode() % 2}
 props:
   sql-show: false
